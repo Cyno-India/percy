@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-3(_bcaze(2f4-y%vb@!x_26_g12q$=wk*(%%4(+qaii&(o0*ld'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['percyweb.herokuapp.com','localhost']
+ALLOWED_HOSTS = ['percyweb.herokuapp.com','127.0.0.1']
 
 
 # Application definition
