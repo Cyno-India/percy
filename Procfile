@@ -1,0 +1,1 @@
+web: gunicorm percy.wsgi
