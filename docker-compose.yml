@@ -1,0 +1,180 @@
+# # # services:
+# # #   app:
+# # #     build: .
+# # #     command : python manage.py runserver 0.0.0.0:8000
+# # #     volumes:
+# # #       - .:/code
+# # #     ports:
+# # #       - "8000:8000"
+
+# # version: "3.9"
+   
+# # services:
+# #   app:
+# #     build: .
+# #     command: python manage.py runserver 0.0.0.0:8000
+
+# #     volumes:
+# #       - .:/code
+# #     ports:
+# #       - 8000:8000
+# #     depends_on:
+# #       - mongo
+
+# #   # mongodb:
+# #   #   image: mongo
+# #   #   volumes: 
+# #   #     - ./data-db:/data/db
+# #   #   ports: 
+# #   #     - 27017:27017
+
+  
+# #   mongo:
+# #     image: mongo
+# #     container_name: mongo
+# #     restart: always
+# #     env_file: .env
+# #     environment: 
+# #       - MONGO_INITDB_ROOT_USERNAME=root
+# #       - MONGO_INITDB_ROOT_PASSWORD=root
+# #       - MONGO_INITDB_DATABASE=${MONGO_DB_NAME}
+# #       - MONGO_INITDB_USERNAME=${MONGO_DB_USERNAME}
+# #       - MONGO_INITDB_PASSWORD=${MONGO_DB_PASSWORD}
+# #     volumes:
+# #       - ${PWD}/_data/mongo:/data/db
+# #       - ${PWD}/docker/_mongo/fixtures:/import
+# #       - ${PWD}/docker/_mongo/scripts/init.sh:/docker-entrypoint-initdb.d/setup.sh
+# #     ports:
+# #       - 27017:27017
+    
+# #     # depends_on:
+# #     #   - db
+    
+# #   # db:
+# #   #   image: postgres:13-alpine
+# #   #   volumes:
+# #   #     - ./data/db:/var/lib/postgresql/data
+   
+  
+# #   # aprrka:
+# #   #   restart: always
+# #   #   build: .    
+# #   #   depends_on:
+# #   #     - db
+
+# version: '3.9'
+
+# volumes:
+#   init-db:
+#   data-db:
+
+# services:
+#   mongodb:
+#     image: mongo
+#     restart: always
+#     volumes:
+#       - ./init-db:/docker-entrypoint-initdb.d
+#       - ./data-db:/data/db
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: root
+#       MONGO_INITDB_ROOT_PASSWORD: mongoadmin
+#       MONGO_INITDB_DATABASE: django_mongodb_docker
+#     ports:
+#       - 27017:27017
+
+#   # mongo-express:
+#   #   image: mongo-express
+#   #   restart: always
+#   #   ports:
+#   #     - 8081:8081
+#   #   environment:
+#   #     ME_CONFIG_MONGODB_ADMINUSERNAME: root
+#   #     ME_CONFIG_MONGODB_ADMINPASSWORD: mongoadmin
+
+#   app:
+#     build: .
+#     command: python manage.py runserver 0.0.0.0:8000
+#     volumes:
+#       - .:/code
+#     ports:
+#       - 8000:8000
+#     links:
+#       - mongodb
+#     depends_on:
+#       - migration
+
+#   migration:
+#     build: .
+#     command: python manage.py migrate --fake-intial
+#     volumes:
+#       - .:/code
+#     links:
+#       - mongodb
+#     depends_on:
+#       - make_migrations
+
+#   make_migrations:
+#     build: .
+#     command: python manage.py makemigrations
+#     volumes:
+#       - .:/code
+#     links:
+#       - mongodb
+#     depends_on:
+#       - mongodb
+
+version: '3'
+
+services:
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    env_file: .env
+    environment: 
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_DATABASE=${MONGO_DB_NAME}
+      - MONGO_INITDB_USERNAME=${MONGO_DB_USERNAME}
+      - MONGO_INITDB_PASSWORD=${MONGO_DB_PASSWORD}
+    volumes:
+      - ${PWD}/_data/mongo:/data/db
+      - ${PWD}/docker/_mongo/fixtures:/import
+      - ${PWD}/docker/_mongo/scripts/init.sh:/docker-entrypoint-initdb.d/setup.sh
+    ports:
+      - 27017:27017
+
+  # postgres:
+  #   container_name: postgres
+  #   image: postgres:12
+  #   restart: always
+  #   env_file: .env
+  #   environment:
+  #     - POSTGRES_DB=app_db
+  #     - POSTGRES_USER=app_db_user
+  #     - POSTGRES_PASSWORD=supersecretpassword
+  #     - POSTGRES_PORT=5432
+  #   ports:
+  #     - 5432:5432
+  #   volumes:
+  #     - ${PWD}/_data/postgres:/var/lib/postgresql/data
+
+  #     - ${PWD}/docker/_postgres/scripts/create_test_db.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+
+
+
+  app:
+    build: .
+    command:   python manage.py runserver 0.0.0.0:8000
+    env_file: .env
+    volumes:
+      - .:/code
+    ports:
+      - 8000:8000
+    depends_on:
+      - mongo
+
+
+networks:
+  default:

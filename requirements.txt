@@ -1,0 +1,20 @@
+asgiref==3.5.2
+# Django==4.0.6
+sqlparse==0.2.4
+# psycopg2
+django-cors-headers
+PyJWT
+djangorestframework
+requests
+djongo    
+django-utils-six
+# pymongo==3.12.1
+Django==3.1.3
+# git+git://github.com/thepylot/djongo.git#egg=djongo
+mongoengine==0.20.0
+pylint-mongoengine==0.4.0
+pymongo==3.11.0
+psycopg2-binary==2.8.5
+django-filter
+# Faker
+python-bsonjs
