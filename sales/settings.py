@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-3(_bcaze(2f4-y%vb@!x_26_g12q$=wk*(%%4(+qaii&(o0*ld
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['cynopercy.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['cynopercy.herokuapp.com','localhost']
 
 
 # Application definition
@@ -139,7 +139,8 @@ DATABASES = {
         "NAME": os.environ.get('MONGO_DB_NAME'),
         "CLIENT": {
             "host": os.environ.get('MONGO_DB_HOST'),
-            "port": int(os.environ.get('MONGO_DB_PORT')),
+            # "port": int(os.environ.get('MONGO_DB_PORT')),
+            "port": 27017,
             "username": os.environ.get('MONGO_DB_USERNAME'),
             "password": os.environ.get('MONGO_DB_PASSWORD'),
         },
@@ -187,8 +188,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # STATICFILES_DIRS = (
 #     os.path.join(BASE_DIR, '/code/static'),
 # )

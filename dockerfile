@@ -44,7 +44,6 @@ WORKDIR /code
 # Install dependencies
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
-RUN python manage.py collectstatic --noinput --clear
 
 # Copy project
 # COPY . .
