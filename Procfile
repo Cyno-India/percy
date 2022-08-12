@@ -1,1 +1,1 @@
-web: gunicorm percy.wsgi --log-file
+web: gunicorn percy.wsgi --log-file
