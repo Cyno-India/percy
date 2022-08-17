@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-3(_bcaze(2f4-y%vb@!x_26_g12q$=wk*(%%4(+qaii&(o0*ld
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['percyweb.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['percyweb.herokuapp.com','127.0.0.1','rocky-scrubland-84049.herokuapp.com']
 
 
 # Application definition
