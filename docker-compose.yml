@@ -162,24 +162,43 @@ services:
 
 
 
+  # app:
+  #   build: .
+  #   command: python manage.py runserver 0.0.0.0:8000
+  #   env_file: .env
+  #   volumes:
+  #     - .:/code
+  #   ports:
+  #     - 8000:8000
+  #   depends_on:
+  #     - mongo
+
   app:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     env_file: .env
-    volumes:
-      - .:/code
     ports:
       - 8000:8000
-    depends_on:
-      - migration
-
-  migration:
-    build: .
-    command: python manage.py collectstatic --noinput --clear
     volumes:
       - .:/code
+      - ./data/web:/vol/web
     depends_on:
       - mongo
+  # nginx:
+  #   build: ./nginx
+  #   volumes:
+  #     - .:/code
+  #   ports:
+  #     - "80:8080"
+  #   depends_on:
+  #     - app
+  # migration:
+  #   build: .
+  #   command: python manage.py collectstatic --noinput --clear
+  #   volumes:
+  #     - .:/code
+  #   depends_on:
+  #     - mongo
 
-networks:
-  default:
+  # networks:
+  #   default:

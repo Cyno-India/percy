@@ -3,7 +3,8 @@ from pyexpat import model
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-
+from django.dispatch import receiver
+from django.db.models.signals import pre_save
 
 
 # from djongo import models as models
@@ -27,6 +28,13 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ['username']
 
+    @receiver(pre_save, sender=AbstractUser)
+    def set_new_user_inactive(sender, instance, **kwargs):
+        if instance._state.adding is True:
+            print("Creating Inactive User")
+            instance.is_active = False
+        else:
+            print("Updating User Record")
     # class Meta:
     #     constraints = [
     #         models.UniqueConstraint(fields=['email','phone'],name='unique_user')

@@ -90,12 +90,25 @@ class LoginView(APIView):
         password = request.data['password']
 
         user = CustomUser.objects.filter(email=email).first()
+        if CustomUser.objects.filter(email=email).values_list('is_active')[0][0] == False:
+        # print('active',active)
+            return Response('Admin approval still pending')
 
-        if user is None:
+        # if active == 'False':
+        #     print('hello')
+        #     return Response('Admin approval pending')
+        # active = CustomUser.objects.filter(is_active=user)
+        # print(active,'active')
+
+        # if active == False:
+        #     return Response('Admin Approval is still Required')
+
+
+        elif user is None:
             # raise AuthenticationFailed('Credentials not found')
             return JsonResponse({"error":"Email Mismatch"}, status=401)
         
-        if not user.check_password(password):
+        elif not user.check_password(password):
             # raise AuthenticationFailed('Incorrect Password')
             return JsonResponse({"error":"Incorrect passoword"}, status=401)
         
